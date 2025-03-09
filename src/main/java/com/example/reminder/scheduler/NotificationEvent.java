@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 public class NotificationEvent {
     private Long notificationId;
-    private List<Long> chats; // Список ID чатов
+    private List<String> chats; // Список ID чатов
     private NotificationType type;
     private String message;
 }

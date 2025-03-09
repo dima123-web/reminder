@@ -37,11 +37,10 @@ public class NotificationScheduler {
         });
     }
 
-    //TODO: поменять на String
     private NotificationEvent convertToEvent(Notification notification) {
         return NotificationEvent.builder()
                 .notificationId(notification.getId())
-                .chats(notification.getChats().stream().map(Chat::getId).toList())
+                .chats(notification.getChats().stream().map(Chat::getChatId).toList())
                 .type(notification.getNotificationType())
                 .message(buildMessage(notification))
                 .build();
