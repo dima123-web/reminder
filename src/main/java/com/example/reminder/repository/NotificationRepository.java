@@ -1,0 +1,20 @@
+package com.example.reminder.repository;
+
+import com.example.reminder.models.notification.Notification;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Repository
+public interface NotificationRepository extends JpaRepository<Notification, Long> {
+
+    @Query("SELECT n FROM Notification n " +
+            "WHERE n.sendDateTime <= :currentTime " +
+            "AND (n.frequency != 'ONCE' OR n.frequency IS NULL)")
+    List<Notification> findNotificationsForSending(@Param("currentTime") LocalDateTime currentTime);
+
+}
