@@ -20,6 +20,6 @@ public interface NotificationService {
 
     void updateNotificationSchedule(Notification notification, LocalDateTime newTime);
 
-    public void deleteOneTimeNotification(Notification notification);
+    void deleteOneTimeNotification(Notification notification);
 
 }

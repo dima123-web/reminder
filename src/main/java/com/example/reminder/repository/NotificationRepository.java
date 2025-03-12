@@ -14,7 +14,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     @Query("SELECT n FROM Notification n " +
             "WHERE n.sendDateTime <= :currentTime " +
-            "AND (n.frequency != 'ONCE' OR n.frequency IS NULL)")
+            "AND (n.frequency IS NULL)")
     List<Notification> findNotificationsForSending(@Param("currentTime") LocalDateTime currentTime);
 
 }
