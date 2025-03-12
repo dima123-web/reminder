@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
@@ -31,12 +32,13 @@ public class NotificationScheduler {
         notifications.forEach(notification -> {
             log.info("Start send");
             try {
-                kafkaProducerService.sendNotificationEvent(convertToEvent(notification));
+                String randomId = UUID.randomUUID().toString();
+                kafkaProducerService.sendNotificationEvent(convertToEvent(notification, randomId));
             } catch (InterruptedException e) {
-                log.error("Ошибка при отправке в kafka, поток прерван во премя ожидания:"+ e.getMessage());
+                log.error("Ошибка при отправке в kafka, поток прерван во премя ожидания:" + e.getMessage());
                 return;
             } catch (ExecutionException e) {
-                log.error("Ошибка при отправке в kafka:"+ e.getMessage());
+                log.error("Ошибка при отправке в kafka:" + e.getMessage());
                 return;
             }
 
@@ -49,9 +51,9 @@ public class NotificationScheduler {
         });
     }
 
-    private NotificationEvent convertToEvent(Notification notification) {
+    private NotificationEvent convertToEvent(Notification notification, String randomId) {
         return NotificationEvent.builder()
-                .notificationId(notification.getId())
+                .messageId(randomId + "_" + notification.getId())
                 .chats(notification.getChats().stream().map(Chat::getChatId).toList())
                 .type(notification.getNotificationType())
                 .message(buildMessage(notification))

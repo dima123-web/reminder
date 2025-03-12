@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @Builder
 public class NotificationEvent {
-    private Long notificationId;
+    private String messageId;
     private List<String> chats; // Список ID чатов
     private NotificationType type;
     private String message;
