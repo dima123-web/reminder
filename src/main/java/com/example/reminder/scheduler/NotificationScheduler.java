@@ -5,6 +5,7 @@ import com.example.reminder.models.notification.Frequency;
 import com.example.reminder.models.notification.Notification;
 import com.example.reminder.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NotificationScheduler {
@@ -26,7 +29,16 @@ public class NotificationScheduler {
         List<Notification> notifications = notificationService.getDueNotifications(now);
 
         notifications.forEach(notification -> {
-            kafkaProducerService.sendNotificationEvent(convertToEvent(notification));
+            log.info("Start send");
+            try {
+                kafkaProducerService.sendNotificationEvent(convertToEvent(notification));
+            } catch (InterruptedException e) {
+                log.error("Ошибка при отправке в kafka, поток прерван во премя ожидания:"+ e.getMessage());
+                return;
+            } catch (ExecutionException e) {
+                log.error("Ошибка при отправке в kafka:"+ e.getMessage());
+                return;
+            }
 
             if (notification.getFrequency() != Frequency.ONCE) {
                 LocalDateTime nextTime = calculateNextTime(notification.getSendDateTime(), notification.getFrequency());
