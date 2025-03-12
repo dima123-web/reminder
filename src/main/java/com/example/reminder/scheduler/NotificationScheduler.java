@@ -27,7 +27,9 @@ public class NotificationScheduler {
     @Transactional
     public void checkAndSendNotifications() {
         LocalDateTime now = LocalDateTime.now();
+        log.info(now.toString());
         List<Notification> notifications = notificationService.getDueNotifications(now);
+        log.info("notifications :{}",notifications);
 
         notifications.forEach(notification -> {
             log.info("Start send");
