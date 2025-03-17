@@ -2,8 +2,6 @@ package com.example.reminder.web.dto.notification;
 
 import com.example.reminder.models.notification.Frequency;
 import com.example.reminder.models.notification.NotificationType;
-import com.example.reminder.web.dto.validation.OnCreate;
-import com.example.reminder.web.dto.validation.OnUpdate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -16,26 +14,22 @@ import java.util.List;
 @Data
 public class NotificationRequestDto {
     @NotNull(
-            message = "Name must be not null.",
-            groups = {OnCreate.class, OnUpdate.class}
+            message = "Name must be not null."
     )
     @Length(
             max = 255,
-            message = "Name length must be smaller than 255 symbols.",
-            groups = {OnCreate.class, OnUpdate.class}
+            message = "Name length must be smaller than 255 symbols."
     )
     private String name;
 
     @Length(
             max = 255,
-            message = "Description length must be smaller than 255 symbols.",
-            groups = {OnCreate.class, OnUpdate.class}
+            message = "Description length must be smaller than 255 symbols."
     )
     private String description;
 
     @NotNull(
-            message = "Chats must be not null.",
-            groups = {OnCreate.class, OnUpdate.class}
+            message = "Chats must be not null."
     )
     private List<Long> chatIds; // первичный ключ чатов
 

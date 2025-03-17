@@ -32,30 +32,6 @@ public class NotificationController {
         return ResponseEntity.ok(notificationMapper.toDto(createdNotification));
     }
 
-//
-//    @GetMapping("/{id}")
-//    public NotificationResponseDto getById(@PathVariable Long id) {
-//        Notification notification = notificationService.getById(id);
-//        return notificationMapper.toDto(notification);
-//
-//    }
-//
-//    @PostMapping
-//    public NotificationResponseDto create(@Validated(OnCreate.class) @RequestBody NotificationRequestDto dto) {
-//        Notification notification = notificationMapper.toEntity(dto);
-//        Notification createdNotification = notificationService.create(notification);
-//        return notificationMapper.toDto(createdNotification);
-//    }
-//
-//    @PutMapping
-//    public NotificationResponseDto update(@Validated(OnUpdate.class) @RequestBody NotificationRequestDto dto,
-//                                          @PathVariable Long id) {
-//
-//        Notification notification = notificationMapper.toEntity(dto);
-//        Notification updatedNotification = notificationService.update(notification, id);
-//        return notificationMapper.toDto(updatedNotification);
-//    }
-
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable final Long id) {
         notificationService.delete(id);

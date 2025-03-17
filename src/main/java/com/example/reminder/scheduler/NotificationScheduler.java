@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -76,6 +77,7 @@ public class NotificationScheduler {
             case EVERY_DAY -> currentTime.plusDays(1);
             case WEEKLY -> currentTime.plusWeeks(1);
             case MONTHLY -> currentTime.plusMonths(1);
+            case WEEKDAY ->currentTime.getDayOfWeek() != DayOfWeek.FRIDAY ? currentTime.plusDays(1): currentTime.plusDays(3);
             default -> throw new IllegalArgumentException("Unsupported frequency: " + frequency);
         };
     }

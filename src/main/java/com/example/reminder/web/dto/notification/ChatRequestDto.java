@@ -1,7 +1,5 @@
 package com.example.reminder.web.dto.notification;
 
-import com.example.reminder.web.dto.validation.OnCreate;
-import com.example.reminder.web.dto.validation.OnUpdate;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -10,19 +8,16 @@ import org.hibernate.validator.constraints.Length;
 public class ChatRequestDto {
 
     @NotNull(
-            message = "Name must be not null.",
-            groups = {OnCreate.class, OnUpdate.class}
+            message = "Name must be not null."
     )
     @Length(
             max = 255,
-            message = "Name length must be smaller than 255 symbols.",
-            groups = {OnCreate.class, OnUpdate.class}
+            message = "Name length must be smaller than 255 symbols."
     )
     private String name;
 
     @NotNull(
-            message = "Chat id must be not null.",
-            groups = {OnCreate.class, OnUpdate.class}
+            message = "Chat id must be not null."
     )
     private String chatId;
 

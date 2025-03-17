@@ -9,5 +9,4 @@ public class ChatMapper {
         return ChatResponseDto.builder().id(chat.getId())
                 .name(chat.getName()).build();
     }
-
 }

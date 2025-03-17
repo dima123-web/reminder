@@ -1,6 +1,5 @@
 package com.example.reminder.service.impl;
 
-import com.example.reminder.exception.ResourceNotFoundException;
 import com.example.reminder.models.notification.Notification;
 import com.example.reminder.repository.NotificationRepository;
 import com.example.reminder.service.NotificationService;
@@ -18,29 +17,9 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
 
     @Override
-    public Notification getById(Long id) {
-        return notificationRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Notification not found"));
-    }
-
-    @Override
     public Notification create(Notification notification) {
         notificationRepository.save(notification);
         return notification;
-    }
-
-    @Override
-    public Notification update(Notification notification, Long id) {
-
-        Notification existing = getById(id);
-        existing.setName(notification.getName());
-        existing.setDescription(notification.getDescription());
-        existing.setChats(notification.getChats());
-        existing.setSendDateTime(notification.getSendDateTime());
-        existing.setFrequency(notification.getFrequency());
-        existing.setNotificationType(notification.getNotificationType());
-        notificationRepository.save(existing);
-        return existing;
     }
 
     @Override
