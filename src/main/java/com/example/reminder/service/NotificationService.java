@@ -22,4 +22,6 @@ public interface NotificationService {
 
     void deleteOneTimeNotification(Notification notification);
 
+    List<Notification> getAllNotification();
+
 }
